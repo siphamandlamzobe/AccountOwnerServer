@@ -12,26 +12,20 @@ namespace AccountOwnerServer.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILoggerManager _logger;
 
-        public WeatherForecastController(ILoggerManager logger)
+        private readonly IRepositoryWrapper _repoWrapper;
+
+        public WeatherForecastController(IRepositoryWrapper logger)
         {
-            _logger = logger;
+            _repoWrapper = logger;
         }
 
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            _logger.LogInfo("Here is info message from the controller.");
-            _logger.LogDebug("Here is debug message from the controller.");
-            _logger.LogWarn("Here is warn message from the controller.");
-            _logger.LogError("Here is error message from the controller.");
-
+            var domesticAccounts = _repoWrapper.Account.FindByCondition(x => x.AccountType.Equals("Domestic"));
+            var owners = _repoWrapper.Owner.FindAll();
             return new string[] { "value1", "value2" };
         }
     }
