@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AccountOwnerServer.Extensions;
+using AutoMapper;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,7 @@ namespace AccountOwnerServer
         {
             services.ConfigureRepositoryWrapper();
             services.ConfigureMySqlContext(Configuration);
+            services.AddAutoMapper(typeof(Startup));
             //services.AddDbContext<RepositoryContext>(o => o.UseMySql(Configuration.GetConnectionString("AccountOwnerConnection")));
             services.ConfigureLoggerService();
             services.AddControllers();
